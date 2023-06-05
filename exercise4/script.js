@@ -1,17 +1,22 @@
-const submitBtn = document.querySelector('.submit-btn');
-
-const alertBlock = document.querySelector('.alert');
+const submitBtn = document.querySelector(".submit-btn");
+const resultImg = document.querySelector(".result-img");
+const alertBlock = document.querySelector(".alert");
 
 submitBtn.onclick = async function () {
-  const width = document.querySelector('.input-width').value;
-  const height = document.querySelector('.input-height').value;
+  const width = document.querySelector(".input-width").value;
+  const height = document.querySelector(".input-height").value;
+  
+  if (width >= 100 && width <= 300 && height >= 100 && height <= 300) {
+    alertBlock.style.display = "none";
 
-  if((width > 100 && width < 300) && (height > 100 && height < 300)) {
-    alertBlock.style.display = 'none';
-    // fetch(`https://picsum.photos/${width}/${height}`).then(res => res.json()).then(data => console.log(data));
-    let result = await fetch(`https://jsonplaceholder.typicode.com/photos/`).then(res => res.json()).then(data => data);
-    console.log(result);
+    const imgSrc = await fetch(`https://picsum.photos/${width}/${height}`)
+      .then((res) => res.url)
+      .catch(() => alert("Ошибка получился)"));
+
+    resultImg.src = imgSrc;
+    resultImg.style.display = "block";
   } else {
-    alertBlock.style.display = 'flex';
+    resultImg.style.display = "none";
+    alertBlock.style.display = "flex";
   }
-}
+};
