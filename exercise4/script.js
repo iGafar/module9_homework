@@ -10,7 +10,7 @@ submitBtn.onclick = async function () {
     alertBlock.style.display = "none";
 
     const imgSrc = await fetch(`https://picsum.photos/${width}/${height}`)
-      .then((res) => res.url)
+      .then(res => res.url)
       .catch(() => alert("Ошибка получился)"));
 
     resultImg.src = imgSrc;
