@@ -49,4 +49,4 @@ function displayResult(data) {
     cards += cardBlock;
   });
   imagesBlock.innerHTML = cards;
-}
+};
