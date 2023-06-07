@@ -2,6 +2,10 @@ const submitBtn = document.querySelector(".submit-btn");
 const alertBlock = document.querySelector(".alert");
 const imagesBlock = document.querySelector(".imgs");
 
+if (localStorage.getItem("cards")) {
+  displayResult(JSON.parse(localStorage.getItem("cards")));
+}
+
 submitBtn.onclick = async function () {
   const inputNumber = document.querySelector(".input-number").value;
   const inputLimit = document.querySelector(".input-limit").value;
@@ -25,19 +29,24 @@ submitBtn.onclick = async function () {
     const array = await fetch(
       `http://jsonplaceholder.typicode.com/photos?_start=${inputNumber}&_limit=${inputLimit}`
     )
-      .then(res => res.json())
+      .then((res) => res.json())
       .catch(() => alert("Ошибка получился)"));
-      
-      let cards = ''
-      array.forEach(e => {
-        const cardBlock = `<img class="img" src="${e.url}">`;
-        cards += cardBlock;
-      });
 
-      alertBlock.style.display = "none";
-      imagesBlock.style.display = "flex";
-      imagesBlock.innerHTML = cards;
+    let result = [];
+    array.forEach((item) => result.push(item.url));
+    localStorage.setItem("cards", JSON.stringify(result));
 
-      localStorage.setItem(cards)
+    displayResult(result);
+
+    alertBlock.style.display = "none";
+    imagesBlock.style.display = "flex";
   }
 };
+function displayResult(data) {
+  let cards = "";
+  data.forEach((e) => {
+    const cardBlock = `<img class="img" src="${e}">`;
+    cards += cardBlock;
+  });
+  imagesBlock.innerHTML = cards;
+}
