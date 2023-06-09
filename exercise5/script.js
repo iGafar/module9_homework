@@ -4,6 +4,7 @@ const imagesBlock = document.querySelector(".imgs");
 
 if (localStorage.getItem("cards")) {
   displayResult(JSON.parse(localStorage.getItem("cards")));
+  imagesBlock.style.display = 'flex';
 }
 
 submitBtn.onclick = async function () {
@@ -42,6 +43,7 @@ submitBtn.onclick = async function () {
     imagesBlock.style.display = "flex";
   }
 };
+
 function displayResult(data) {
   let cards = "";
   data.forEach((e) => {
